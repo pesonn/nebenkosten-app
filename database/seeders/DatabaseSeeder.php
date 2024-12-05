@@ -2,7 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\MeterReader;
+use App\Models\MeterReading;
 use App\Models\User;
+
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -17,7 +20,14 @@ class DatabaseSeeder extends Seeder
 
         User::factory()->create([
             'name' => 'Test User',
-            'email' => 'test@example.com',
+            'email' => 'test2@example.com',
+            'password' => bcrypt('password'),
         ]);
+
+        MeterReader::factory(5)
+            ->has(MeterReading::factory(10))
+            ->create();
+
+        $this->call([ServiceChargesSeeder::class]);
     }
 }

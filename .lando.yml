@@ -1,0 +1,4 @@
+name: nebenkosten
+recipe: laravel
+config:
+  webroot: .
