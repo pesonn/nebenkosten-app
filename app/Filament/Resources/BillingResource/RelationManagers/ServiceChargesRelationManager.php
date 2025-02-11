@@ -27,6 +27,10 @@ class ServiceChargesRelationManager extends RelationManager
     public function table(Table $table): Table
     {
         return $table
+//            ->modifyQueryUsing(
+//                fn(Builder $query) => dd($this->getOwnerRecord()->location_id)
+////                $query->where('location_id', $this->getOwnerRecord()->location->id)
+//            )
             ->recordTitleAttribute('name')
             ->columns([
                 Tables\Columns\TextColumn::make('name'),
