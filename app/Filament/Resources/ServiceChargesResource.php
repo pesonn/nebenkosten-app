@@ -58,6 +58,13 @@ class ServiceChargesResource extends Resource
                     ->required()
                     ->numeric(),
 
+                TextInput::make('total_usage')
+                    ->required()
+                    ->numeric(),
+
+                TextInput::make('usage_unit')
+                    ->required(),
+
                 DatePicker::make('payed_at')
                     ->label('Payed Date'),
 

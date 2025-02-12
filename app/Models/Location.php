@@ -32,8 +32,7 @@ class Location extends Model
     {
         return $this->belongsToMany(ServiceCharges::class)->withPivot(
             'amount',
-            'proportional',
-            'proportional_unit',
+            'usage',
             'related_meter_readers'
         )->using(LocationServiceCharges::class);
     }

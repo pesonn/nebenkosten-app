@@ -16,8 +16,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('location_id')->constrained();
             $table->foreignId('service_charges_id')->constrained();
-            $table->integer('proportional')->nullable();
-            $table->string('proportional_unit')->nullable();
+            $table->integer('usage')->nullable();
             $table->integer('amount')->nullable();
         });
     }

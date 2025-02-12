@@ -23,14 +23,10 @@ class LocationsRelationManager extends RelationManager
                     ->maxLength(255)
                     ->columnSpanFull(),
                 Forms\Components\Group::make([
-                    Forms\Components\TextInput::make('proportional')
+                    Forms\Components\TextInput::make('usage')
                         ->required()
                         ->numeric()
                         ->maxLength(50)
-                        ->columnSpan(1),
-                    Forms\Components\TextInput::make('proportional_unit')
-                        ->required()
-                        ->maxLength(255)
                         ->columnSpan(1),
                 ])->columns(2)->columnSpanFull(),
                 Forms\Components\Group::make([
@@ -53,8 +49,7 @@ class LocationsRelationManager extends RelationManager
             ->columns([
                 Tables\Columns\TextColumn::make('address'),
                 Tables\Columns\TextColumn::make('amount'),
-                Tables\Columns\TextColumn::make('proportional'),
-                Tables\Columns\TextColumn::make('proportional_unit'),
+                Tables\Columns\TextColumn::make('usage'),
             ])
             ->filters([
                 //

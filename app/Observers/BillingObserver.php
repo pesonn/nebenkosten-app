@@ -9,20 +9,13 @@ class BillingObserver
 {
     public function created(Billing $billing): void
     {
-        $this->attachRelatedServiceChargesFromLocationsWithinBillingPeriod($billing);
+        (new BillingService($billing))->attachRelatedServiceChargesFromLocationsWithinBillingPeriod();
     }
 
     public function saved(Billing $billing): void
     {
-        $this->attachRelatedServiceChargesFromLocationsWithinBillingPeriod($billing);
+        (new BillingService($billing))->attachRelatedServiceChargesFromLocationsWithinBillingPeriod();
     }
 
-    private function attachRelatedServiceChargesFromLocationsWithinBillingPeriod(Billing $billing): void
-    {
-        $billingService = new BillingService($billing);
-        $serviceCharges = $billingService->getRelatedServiceChargesFromLocationsWithinBillingPeriod()->pluck(
-            'id'
-        )->toArray();
-        $billing->serviceCharges()->syncWithoutDetaching($serviceCharges);
-    }
+
 }

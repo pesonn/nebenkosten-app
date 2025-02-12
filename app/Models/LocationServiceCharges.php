@@ -13,8 +13,7 @@ class LocationServiceCharges extends Pivot
 
     protected $fillable = [
         'amount',
-        'proportional',
-        'proportional_unit',
+        'usage',
         'related_meter_readers',
     ];
 

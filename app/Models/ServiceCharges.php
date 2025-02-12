@@ -4,7 +4,10 @@ namespace App\Models;
 
 use App\Enums\ServiceTypeCalculationBase;
 use App\Observers\ServiceChargesObserver;
+use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -25,6 +28,8 @@ class ServiceCharges extends Model
         'invoice_id',
         'meter_reader_id',
         'amount',
+        'total_usage',
+        'usage_unit',
         'calculation_base',
         'period_started_at',
         'period_ended_at',
@@ -50,9 +55,8 @@ class ServiceCharges extends Model
     public function locations(): BelongsToMany
     {
         return $this->belongsToMany(Location::class)->withPivot(
-            'proportional',
+            'usage',
             'amount',
-            'proportional_unit',
             'related_meter_readers'
         )->using(
             LocationServiceCharges::class
@@ -75,7 +79,7 @@ class ServiceCharges extends Model
             return;
         }
         foreach ($this->locations as $location) {
-            $ratio = $location->pivot->proportional / 100;
+            $ratio = $location->pivot->usage / 100;
 
             $newCalculatedAmount = round($this->amount * $ratio, 2);
             if ($newCalculatedAmount === $location->pivot->amount) {
@@ -83,5 +87,11 @@ class ServiceCharges extends Model
             }
             $this->locations()->updateExistingPivot($location->id, ['amount' => $newCalculatedAmount]);
         }
+    }
+
+    public function scopeWithinPeriod(Builder $query, Carbon $start, Carbon $end): Builder
+    {
+        return $query->where('period_started_at', '<=', $end)
+            ->where('period_ended_at', '>=', $start);
     }
 }

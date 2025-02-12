@@ -13,7 +13,7 @@ class ServiceChargesSeeder extends Seeder
     {
         ServiceCharges::factory(2)->hasAttached(
             Location::factory(),
-            ['proportional' => fake()->numberBetween(0, 100), 'proportional_unit' => "%"]
+            ['usage' => fake()->numberBetween(0, 100),]
         )->create();
 
         ServiceCharges::factory(2)->hasAttached(

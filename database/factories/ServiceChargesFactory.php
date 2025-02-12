@@ -24,7 +24,8 @@ class ServiceChargesFactory extends Factory
             'payed_at' => Carbon::now(),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
-
+            'usage_unit' => "%",
+            'total_usage' => $this->faker->randomFloat(),
             'provider_id' => Provider::factory(),
             'service_type_id' => ServiceType::factory(),
         ];

@@ -17,12 +17,23 @@ class BillingService
 
     public function getRelatedServiceChargesFromLocationsWithinBillingPeriod(): Collection
     {
-        return $this->billing->location->serviceCharges()->whereBetween(
-            'period_started_at',
-            [$this->billing->period_starts_at, $this->billing->period_ends_at]
-        )->orWhereBetween(
-            'period_ended_at',
-            [$this->billing->period_starts_at, $this->billing->period_ends_at]
-        )->get();
+        return $this->billing->location->serviceCharges()
+            ->withinPeriod(
+                $this->billing->period_starts_at,
+                $this->billing->period_ends_at
+            )
+            ->orderBy('period_started_at')
+            ->get();
+    }
+
+    public function attachRelatedServiceChargesFromLocationsWithinBillingPeriod(): void
+    {
+        $serviceCharges = $this->getRelatedServiceChargesFromLocationsWithinBillingPeriod()
+            ->pluck(
+                'id'
+            )
+            ->toArray();
+
+        $this->billing->serviceCharges()->syncWithoutDetaching($serviceCharges);
     }
 }

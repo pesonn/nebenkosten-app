@@ -19,6 +19,8 @@ return new class extends Migration {
             $table->dateTime('period_started_at');
             $table->dateTime('period_ended_at');
             $table->float('amount');
+            $table->float('total_usage');
+            $table->string('usage_unit');
             $table->string('file_path')->nullable();
             $table->dateTime('payed_at')->nullable();
             $table->timestamps();

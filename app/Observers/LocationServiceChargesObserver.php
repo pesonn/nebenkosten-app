@@ -10,4 +10,5 @@ class LocationServiceChargesObserver
     {
         $locationServiceCharges->serviceCharge->recalculateRatioAmountForLocations();
     }
+    
 }
